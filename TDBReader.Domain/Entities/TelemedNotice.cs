@@ -9,6 +9,11 @@ namespace TDBReader.Domain.Entities
     public class TelemedNotice
     {
         /// <summary>
+        /// Идентификатор обращения
+        /// </summary>
+        public Guid? ProcessId { get; set; }
+
+        /// <summary>
         /// Срочность
         /// </summary>
         public string? Urgency { get; set; }

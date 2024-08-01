@@ -20,7 +20,7 @@ namespace TDBReader.Infrastructure.Services
         {
             try
             {
-                var processList = await _telemedRepository.GetProcessRecordAfterDateAsync(dateLastNotice);
+                var processList = await _telemedRepository.GetProcessRecordAfterCurrentOrSpecifiedDateAsync(dateLastNotice);
 
                 if (!processList.Any()) return new List<TelemedNotice>();
 
@@ -29,6 +29,7 @@ namespace TDBReader.Infrastructure.Services
 
                 return processList.Select(x => new TelemedNotice
                 {
+                    ProcessId = x.Metadata?.ProcessId,
                     Urgency = x.Metadata?.ScopedMetadata?.GetValueFromJsonByName("Срочность"),
                     MedicalCareProfile = x.Metadata?.ScopedMetadata?.GetValueFromJsonByName("Профиль медицинской помощи"),
                     MOId = x.Entity?.GetValueFromJsonByName("serviceRequest")?.GetValueFromJsonByName("requesterOrganization")

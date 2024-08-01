@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using TDBReader.Domain.Entities.dbEntities;
 using TDBReader.Domain.Interfaces.Repositories;
 using TDBReader.Presistence.Context;
@@ -32,16 +33,17 @@ namespace TDBReader.Presistence.Repositories
             }
         }
 
-        public async Task<List<Process>> GetProcessRecordAfterDateAsync(DateTime? lastDateTime)
+        public async Task<List<Process>> GetProcessRecordAfterCurrentOrSpecifiedDateAsync(DateTime? date)
         {
-            if (!lastDateTime.HasValue) return new List<Process>();
+            
+            if (!date.HasValue) date = DateTime.Now;
 
             try
             {
                 return await _dbContext.Processes.
                     AsNoTracking().
                     Include(x => x.Metadata).
-                    Where(x => x.Created >= lastDateTime).
+                    Where(x => x.Created > date).
                     ToListAsync();
             }
             catch (Exception ex)

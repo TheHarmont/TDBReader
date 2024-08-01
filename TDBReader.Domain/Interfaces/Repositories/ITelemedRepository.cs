@@ -12,6 +12,10 @@ namespace TDBReader.Domain.Interfaces.Repositories
         /// <summary>
         /// Возвращает список записей, старше указанной даты
         /// </summary>
-        public Task<List<Process>> GetProcessRecordAfterDateAsync(DateTime? lastDateTime);
+        /// <returns>
+        /// <para>Список <see cref="Process"/> отсортированный по указанной дате <paramref name="lastDateTime"/></para>   
+        /// <para>Список <see cref="Process"/> отсортированный по <see cref="DateTime.Now"/>, если <paramref name="lastDateTime"/> не имеет значения</para>
+        /// </returns>
+        public Task<List<Process>> GetProcessRecordAfterCurrentOrSpecifiedDateAsync(DateTime? lastDateTime);
     }
 }

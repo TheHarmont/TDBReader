@@ -14,13 +14,16 @@ namespace TDBReader.Infrastructure.Services
         public TelemedService(ITelemedRepository telemedRepository)
         {
             _telemedRepository = telemedRepository;
+
+            //Если значение последней даты пусто, то отталкиваемся от текущей даты
+            dateLastNotice ??= DateTime.Now;
         }
 
         public async Task<List<TelemedNotice>> GetActualTelemedNotice()
         {
             try
             {
-                var processList = await _telemedRepository.GetProcessRecordAfterCurrentOrSpecifiedDateAsync(dateLastNotice);
+                var processList = await _telemedRepository.GetProcessRecordAfterSpecifiedDateAsync(dateLastNotice);
 
                 if (!processList.Any()) return new List<TelemedNotice>();
 

@@ -33,10 +33,10 @@ namespace TDBReader.Presistence.Repositories
             }
         }
 
-        public async Task<List<Process>> GetProcessRecordAfterCurrentOrSpecifiedDateAsync(DateTime? date)
+        public async Task<List<Process>> GetProcessRecordAfterSpecifiedDateAsync(DateTime? date)
         {
             
-            if (!date.HasValue) date = DateTime.Now;
+            if (!date.HasValue) return new List<Process>();
 
             try
             {
